@@ -1,0 +1,41 @@
+# Keeps issues on the prism-lca-project board (https://github.com/orgs/prism-lca/projects/2):
+#   - a new, reopened or transferred issue is added to the board (the board sets it to Todo)
+#   - an open issue that gets an assignee moves to In progress
+# Closing an issue (directly, or by merging a PR that says "Fixes #N") moves it to Done
+# through the board's own built-in workflows.
+#
+# Needs the org secret ADD_TO_PROJECT_PAT: a fine-grained token owned by prism-lca
+# with Projects: Read and write. The built-in GITHUB_TOKEN cannot edit org projects.
+name: Add to project
+
+on:
+  issues:
+    types: [opened, reopened, transferred, assigned]
+
+permissions: {}
+
+jobs:
+  board:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.ADD_TO_PROJECT_PAT }}
+      ISSUE_URL: ${{ github.event.issue.html_url }}
+      PROJECT_OWNER: prism-lca
+      PROJECT_NUMBER: 2
+      PROJECT_ID: PVT_kwDOFEc0O84BmXu1
+      STATUS_FIELD_ID: PVTSSF_lADOFEc0O84BmXu1zhlBDZY
+      IN_PROGRESS_OPTION_ID: 47fc9ee4
+    steps:
+      - name: Add issue to the board
+        id: add
+        run: |
+          item_id=$(gh project item-add "$PROJECT_NUMBER" --owner "$PROJECT_OWNER" \
+            --url "$ISSUE_URL" --format json --jq .id)
+          echo "item_id=$item_id" >> "$GITHUB_OUTPUT"
+
+      - name: Move to In progress when assigned
+        if: github.event.action == 'assigned' && github.event.issue.state == 'open'
+        run: |
+          gh project item-edit --id "${{ steps.add.outputs.item_id }}" \
+            --project-id "$PROJECT_ID" --field-id "$STATUS_FIELD_ID" \
+            --single-select-option-id "$IN_PROGRESS_OPTION_ID"
