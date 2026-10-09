@@ -23,6 +23,7 @@ CORS_MIDDLEWARE = [
         CORSMiddleware,
         allow_origins=[
             "https://calvinw.github.io",
+            "https://prism-lca.github.io",
             "https://catiehe.github.io",
             "http://localhost:5173",
         ],
