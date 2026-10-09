@@ -54,7 +54,7 @@ NUMERIC_REL_TOLERANCE = 1e-9
 # URL of the pre-built Brightway database tarball on GitHub Releases.
 # To update: build a new tarball (see docs/bafu_database_setup.md) and bump this URL.
 TARBALL_URL = (
-    "https://github.com/calvinw/life-cycle-assessment-mcp"
+    "https://github.com/prism-lca/life-cycle-assessment-mcp"
     "/releases/download/lca-data-v2/brightway_bafu_v1.tar.gz"
 )
 

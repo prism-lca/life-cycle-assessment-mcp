@@ -52,7 +52,7 @@ fi
 
 deploy_user=${LCA_DEPLOY_USER:-root}
 deploy_port=${LCA_DEPLOY_PORT:-22}
-repo_url=${LCA_DEPLOY_REPO_URL:-https://github.com/calvinw/life-cycle-assessment-mcp.git}
+repo_url=${LCA_DEPLOY_REPO_URL:-https://github.com/prism-lca/life-cycle-assessment-mcp.git}
 remote_repo_dir=${LCA_REMOTE_REPO_DIR:-/opt/lca-benchmark}
 container_name=${LCA_DEPLOY_CONTAINER:-lca-benchmark}
 volume_name=${LCA_DEPLOY_VOLUME:-lca_benchmark_brightway}
